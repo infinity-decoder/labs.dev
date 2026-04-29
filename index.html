@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure CI/CD Pipeline Guide | labs.dev</title>
+    <meta name="description" content="Step-by-step guide to deploying a web app on Azure with GitHub Actions CI/CD pipeline for the labs.dev repository.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1 class="gradient-text">Azure Deployment Guide</h1>
+            <p class="subtitle">Automated CI/CD from GitHub to Azure Web Apps</p>
+            
+            <div class="repo-card">
+                <span class="repo-label">Target Repository</span>
+                <div class="repo-url-container">
+                    <code id="repoUrl">https://github.com/infinity-decoder/labs.dev</code>
+                    <button id="copyBtn" class="copy-btn" title="Copy to clipboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="steps-container">
+            
+            <article class="step-card reveal">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h2>Prerequisites</h2>
+                    <p>Before beginning the deployment process, ensure you have the following ready:</p>
+                    <ul>
+                        <li>An active <strong>Azure account</strong> with an active subscription.</li>
+                        <li>A <strong>GitHub account</strong> with access to the <code>infinity-decoder/labs.dev</code> repository.</li>
+                        <li>Administrative privileges on both platforms to create resources and manage webhooks.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="step-card reveal">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h2>Create Azure Web App</h2>
+                    <p>First, we need to provision the hosting environment in Azure.</p>
+                    <ol>
+                        <li>Log in to the <a href="https://portal.azure.com" target="_blank">Azure Portal</a>.</li>
+                        <li>Search for and select <strong>App Services</strong>, then click <strong>Create</strong> &gt; <strong>Web App</strong>.</li>
+                        <li><strong>Basics Tab:</strong>
+                            <ul>
+                                <li>Select your Subscription and a Resource Group (or create a new one).</li>
+                                <li>Provide a globally unique Name for your app (e.g., <code>labs-dev-app</code>).</li>
+                                <li>Publish: Select <strong>Code</strong>.</li>
+                                <li>Runtime stack: Choose the stack matching your project (e.g., Node.js, Python, .NET).</li>
+                                <li>Operating System: Select Linux or Windows.</li>
+                                <li>Region: Choose the closest region to your user base.</li>
+                            </ul>
+                        </li>
+                        <li>Configure the App Service Plan (pricing tier) based on your needs.</li>
+                        <li>Click <strong>Review + create</strong>, validate your settings, and click <strong>Create</strong>. Wait for the deployment to complete.</li>
+                    </ol>
+                </div>
+            </article>
+
+            <article class="step-card reveal">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h2>Configure CI/CD Pipeline</h2>
+                    <p>Now, link your GitHub repository to the Azure Web App to enable automated deployments.</p>
+                    <ol>
+                        <li>Navigate to your newly created Web App resource in the Azure Portal.</li>
+                        <li>In the left-hand navigation menu under <strong>Deployment</strong>, click on <strong>Deployment Center</strong>.</li>
+                        <li>Under the <strong>Settings</strong> tab, locate the <strong>Source</strong> dropdown and select <strong>GitHub</strong>.</li>
+                        <li>If you haven't already, authorize Azure App Service to access your GitHub account.</li>
+                        <li>Fill in the repository details:
+                            <ul>
+                                <li><strong>Organization:</strong> <code>infinity-decoder</code></li>
+                                <li><strong>Repository:</strong> <code>labs.dev</code></li>
+                                <li><strong>Branch:</strong> Select your main deployment branch (usually <code>main</code> or <code>master</code>).</li>
+                            </ul>
+                        </li>
+                        <li>Azure will automatically generate a GitHub Actions workflow file preview. Review the configuration.</li>
+                        <li>Click <strong>Save</strong> at the top. This action will commit the workflow file directly to your GitHub repository and trigger the first deployment.</li>
+                    </ol>
+                </div>
+            </article>
+
+            <article class="step-card reveal">
+                <div class="step-number">04</div>
+                <div class="step-content">
+                    <h2>Monitor &amp; Verify Deployment</h2>
+                    <p>Track the progress of your deployment and verify the live application.</p>
+                    <ol>
+                        <li>Go to your GitHub repository: <code>github.com/infinity-decoder/labs.dev</code>.</li>
+                        <li>Click on the <strong>Actions</strong> tab.</li>
+                        <li>You should see a new workflow run triggered by the commit from Azure. Click on it to watch the build and deploy stages.</li>
+                        <li>Once the workflow completes successfully (green checkmark), return to the Azure Portal.</li>
+                        <li>On your Web App's <strong>Overview</strong> page, click the <strong>Default domain</strong> link (or the <strong>Browse</strong> button) to view your live web app.</li>
+                    </ol>
+                    <div class="success-banner">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <span>Congratulations! Your CI/CD pipeline is now active. Any future pushes to the selected branch will automatically deploy to Azure.</span>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Built with modern web technologies for the <strong>labs.dev</strong> project.</p>
+        </div>
+    </footer>
+
+    <script src="./assets/script.js"></script>
+</body>
+</html>
